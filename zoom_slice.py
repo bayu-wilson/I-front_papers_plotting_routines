@@ -58,7 +58,6 @@ bottom = 0.1; left=0.06
 top=1.-bottom; right = 1.-left
 figheight = 5
 figwidth = figheight*2.5
-# figwidth = (m + (m-1)*wspace)/float((n+(n-1)*hspace)*aspect)*figheight*fisasp
 
 fig, ax = plt.subplots(nrows=n, ncols=m, figsize=(figwidth, figheight),sharex=True,sharey=True,dpi=500)
 ax = ax.flatten()
@@ -84,7 +83,7 @@ ylabels =  np.asarray(np.linspace(ychunk[0]*40,ychunk[1]*40,Nticks)+0.5,int)
 
 for j in range(m):
     axis = ax[j]
-	#adding the red dot in the center
+	#option to add a red dot in the center
     # axis.scatter(x=[Ngas/2],y=[Ngas/2],marker="+",color="red"))
     axis.set_xticks(ticks=ticks)
     axis.set_xticklabels(xlabels)
@@ -98,27 +97,14 @@ for j in range(m):
 
     axis.set_xlim(0,Ngas)
     axis.set_ylim(0,Ngas)
-    # axis.set_xlim(xlim[0],xlim[1])
-    # axis.set_ylim(ylim[0],ylim[1])
-# ax[0].set_xlabel("Mpc/h")
 ax[0].set_ylabel("cMpc/h")
-# ax[2].set_ylabel("cMpc/h")
-# ax[2].set_xlabel("cMpc/h")
-# ax[3].set_xlabel("cMpc/h")
-# ax[1].tick_params(labelright=True,right=True,direction='out')
 ax[3].tick_params(labelbottom=True, labeltop=False, labelleft=False, labelright=True,
                  bottom=True, top=True, left=True, right=True,direction='out')
 
-pad_title = 55 #50
-# ax[0].set_title("Neutral fraction\n"+r"x$_\mathrm{HI}$", pad=pad_title)
-# ax[0].set_title(r"n$_\mathrm{HI}$" +"\n"+r"[cm$^{-3}$]", pad=pad_title)
+pad_title = 55
 ax[0].set_title("Overdensity\n"+r"log$_{10}\Delta$", pad=pad_title)
 ax[1].set_title("Inc. LyC Flux\n"+r"[s$^{-1}$ cm$^{-2}$]", pad=pad_title)
 ax[2].set_title("IF speed\n"+r"[km s$^{-1}$]", pad=pad_title)
-# pad_title = 65
-# ax[3].set_title("Surface Brightness\n"+r"[erg s$^{-1}$ cm $^{-2}$ arcsec$^{-2}$]", pad=pad_title)
 ax[3].set_title(r"Emitted Ly$\alpha$ Flux "+"\n"+r"[s$^{-1}$ cm$^{-2}$]", pad=pad_title)
-
-
 
 plt.savefig("figures/zoom_slice.png",bbox_inches='tight')
