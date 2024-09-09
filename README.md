@@ -9,7 +9,9 @@ Written and documented by Bayu Wilson. Most of the corresponding figures in `fig
 | `zoom_slice.py`| A zoom-in on a neutral region of a slice. Other panels show I-front speed, LyC Flux, and Lya emitted from the I-front|
 | `SB_9_panels.py`| 9 panels of Lya SB plots and then another column showing the SB CDF, average density, and average neutral fraction|
 | `mock18_binned_scopes.py`| Mock narrowband images of neutral islands. Compare fields with neutral islands to fields of only background |
-
+| `SNR_binned_scopes.py`| SNR maps smoothed with circular aperature. The radius is set by the relationship between FWHM and variance|
+| `panels_large_map.py`| The effect of a wider (by 3 times) field of view for neutral island visibility using most optimistic model|
+| `panels_large_map_other_models.py`|  Similar as previous but using the other two less optimistic models |
 
 | **Other**    | **Description**                                                                                         |
 |------------------|---------------------------------------------------------------------------------------------------------|
