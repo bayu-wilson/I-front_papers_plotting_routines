@@ -28,7 +28,7 @@ index = int(nb_depth/sim_depth*Ngas+0.5)
 index_half = int(index/2)
 
 # slice stack is a file created on expanse: FlexRT/postprocessing/extract_results.py
-Delta_slice, xHII_slice, F_lyC_inc_slice, vIF_slice, F_lya_slice = np.load("data/march/FEB_slice_stack.npy")
+Delta_slice, xHII_slice, F_lyC_inc_slice, vIF_slice, F_lya_slice = np.load("data/march/APR_slice_stack.npy")
 xHI_slice  = 1-xHII_slice
 z=5.7
 omega_b = 0.048
