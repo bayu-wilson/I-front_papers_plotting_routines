@@ -17,3 +17,5 @@ Written and documented by Bayu Wilson. Most of the corresponding figures in `fig
 | **Other**    | **Description**                                                                                         |
 |------------------|---------------------------------------------------------------------------------------------------------|
 | `functions.py`     | Helper functions for the plotting routines  |
+
+For more info on the version of the FlexRT code that I used to get these simulations, see [this](https://github.com/bayu-wilson/FlexRT_imaging_reion/tree/main) repository.
