@@ -32,6 +32,14 @@ seed = 12346
 kernels = [5,10,25]
 im_list = []
 
+#formatting
+pix_sz_arcsec = 3.7392
+pix_arr = np.linspace(0,Ngas-1,Ngas)
+theta_arcmin = pix_sz_arcsec*Ngas / 60
+theta_arr = np.linspace(0,theta_arcmin,Ngas)
+labels = [ 0,  8, 16, 24] #arcmin labels
+ticks = [int(np.interp(i,theta_arr,pix_arr)+0.5) for i in labels]
+
 nrows = len(scope_list)
 ncols = len(kernels)
 
@@ -45,7 +53,7 @@ for i in range(nrows): #different kernels (2)
 
 
         radius = int(np.sqrt(2*np.log(2))*kernels[j]+0.5) #FWHM/2
-        FWHM_arcsec = radius*2*3.63
+        FWHM_arcsec = radius*2*pix_sz_arcsec
         ax[-1,j].set_xlabel(r"D$_\mathrm{tophat}=$"+f"{FWHM_arcsec:.1f}"+r"$''$")#,rotation=-90,labelpad=15)
 
         signal_only,pixels_in_kernel = convolve_with_circular_tophat(signal_only,radius=radius)
@@ -58,8 +66,8 @@ for i in range(nrows): #different kernels (2)
         #formatting
         ax[i,j].set_xlim(0,Ngas-1)
         ax[i,j].set_ylim(0,Ngas-1)
-        ticks = np.linspace(0,Ngas-1,4)
-        labels = np.asarray(np.linspace(0,24,4),int)
+        # ticks = np.linspace(0,Ngas-1,4)
+        # labels = np.asarray(np.linspace(0,24,4),int)
         ax[i,j].set_xticks(ticks=ticks)
         ax[i,j].set_xticklabels(labels)
         ax[i,j].set_yticks(ticks=ticks)

@@ -81,7 +81,7 @@ def make_mock_maps(dataCubePath,D_m,texp_hr,Ngas,add_noise):
 	pkpc_per_arcsec = 5.87
 	pix_sz_ckpc     = pix_sz_hinvckpc / h
 	pix_sz_pkpc     = pix_sz_ckpc / (1+z)
-	pix_sz_arcsec   = pix_sz_pkpc / pkpc_per_arcsec   # 3.63
+	pix_sz_arcsec   = pix_sz_pkpc / pkpc_per_arcsec   
 	pix_sz_arcsec2  = pix_sz_arcsec**2
 
 	# Comoving length corresponding to filter
@@ -161,13 +161,13 @@ def make_mock_maps2(I_ifront,D_m,texp_hr,Ngas,add_noise):
 	# Observed HSC NB0816: Ndot_sky ~ 3 counts/s/pixel = 140 counts/s/arcsec2
 
 	# Pixels size
-	pix_sz_hinvckpc = 100
+	pix_sz_hinvckpc = 100 #40 / 400 *1000 = 100
 	h               = 0.68
 	z               = 5.7
 	pkpc_per_arcsec = 5.87
 	pix_sz_ckpc     = pix_sz_hinvckpc / h
 	pix_sz_pkpc     = pix_sz_ckpc / (1+z)
-	pix_sz_arcsec   = pix_sz_pkpc / pkpc_per_arcsec   # 3.63
+	pix_sz_arcsec   = pix_sz_pkpc / pkpc_per_arcsec   # 3.73
 	pix_sz_arcsec2  = pix_sz_arcsec**2
 
 	# Total number of I-front photons collected per pixel

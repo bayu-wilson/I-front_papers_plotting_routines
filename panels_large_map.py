@@ -133,8 +133,17 @@ im_list[2][2].set_clim(vmin=44, vmax=11582)
 for j in range(1,ncols):
     ax[0,j].set_title(f"{model_names[j-1]}\n{apertures[j-1]:.1f}m, {exposure_times[j-1]:d}hr",fontsize=fontsize-3)
 
+
+#formatting
+pix_sz_arcsec = 3.7392
+pix_arr = np.linspace(0,Ngas*3-1,Ngas*3)
+theta_arcmin = pix_sz_arcsec*Ngas*3 / 60
+theta_arr = np.linspace(0,theta_arcmin,Ngas*3)
+labels = [ 0,  24, 48, 72] #arcmin labels
+ticks = [int(np.interp(i,theta_arr,pix_arr)+0.5) for i in labels]
+
 for i in range(nrows):
-    kernel_arcsec = kernels[i]*3.63 #pixel scale in arcsec
+    kernel_arcsec = kernels[i]*pix_sz_arcsec #pixel scale in arcsec
     ax[i,-1].set_ylabel(r"$\sigma=$"+f"{kernel_arcsec:.1f}"+r"$''$",rotation=-90,labelpad=15)
 
     ax[i,-1].yaxis.set_label_position('right')
@@ -143,8 +152,8 @@ for i in range(nrows):
         ax[i,j].set_xlim(0,Ngas*3-1)
         ax[i,j].set_ylim(0,Ngas*3-1)
 
-        ticks = np.linspace(0,Ngas*3-1,4)
-        labels = np.asarray(np.linspace(0,24*3,4),int)
+        # ticks = np.linspace(0,Ngas*3-1,4)
+        # labels = np.asarray(np.linspace(0,24*3,4),int)
         ax[i,j].set_xticks(ticks=ticks)
         ax[i,j].set_xticklabels(labels)
         ax[i,j].set_yticks(ticks=ticks)

@@ -35,6 +35,7 @@ sim_depth = 40 #mpc/h
 index = int(nb_depth/sim_depth*Ngas+0.5)
 sr_to_arcsec2 = 4.25e+10
 cell_size = 40/Ngas*1000/0.68/(1+5.7)*3.086e+21
+pix_sz_arcsec = 3.7392
 
 #path for post-LyaRT SB with more rapid, hard alpha model
 dataCubeDir = "data/march/"
@@ -54,12 +55,18 @@ nrows = len(scope_list)
 fig,ax=plt.subplots(ncols=ncols,nrows=nrows,figsize=(8,4))
 
 #formatting for the plot
+
+pix_arr = np.linspace(0,Ngas-1,Ngas)
+theta_arcmin = pix_sz_arcsec*Ngas / 60
+theta_arr = np.linspace(0,theta_arcmin,Ngas)
+labels = [ 0,  8, 16, 24] #arcmin labels
+ticks = [int(np.interp(i,theta_arr,pix_arr)+0.5) for i in labels]
 for i in range(nrows):
     for j in range(ncols):
         ax[i,j].set_xlim(0,Ngas-1)
         ax[i,j].set_ylim(0,Ngas-1)
-        ticks = np.linspace(0,Ngas-1,4)
-        labels = np.asarray(np.linspace(0,24,4),int)
+        # ticks = np.linspace(0,Ngas-1,4)
+        # labels = np.asarray(np.linspace(0,24,4),int)
         ax[i,j].scatter(x=[Ngas/2],y=[Ngas/2],s=25,marker="+",color="red",alpha=0.5)
         ax[i,j].set_xticks(ticks=ticks)
         ax[i,j].set_xticklabels(labels)
@@ -90,6 +97,23 @@ for i in range(1,nrows): #scopes
         ax[i,j+1].imshow(background, cmap=cm.binary,origin='lower',vmin=vmin,vmax=vmax)
         print(f"(D,t) = ({D_m:.1f},{texp_hr:d}), Kernel: {kernels[j//2]:d}, vmin: {int(vmin):d}, vmax: {int(vmax):d}")
 
+### ADDING CONTOURS TO INTRINSIC MAPS
+dataCubePath_onlyIF = "data/sept2024/out_cube_Nphot600000.npy"
+D_m,texp_hr = scope_list[0]
+filter_kernel = 25
+np.random.seed(seed)
+_, intrinsic_onlyIF = make_mock_maps(dataCubePath=dataCubePath_onlyIF, D_m=D_m,texp_hr=texp_hr,
+            Ngas=Ngas,add_noise=False)
+min_pix_value = np.min(intrinsic_onlyIF)+0.01
+intrinsic_onlyIF += min_pix_value
+intrinsic_onlyIF = gaussian_filter(intrinsic_onlyIF, sigma=filter_kernel,mode='wrap')
+percentiles = [70, 90]
+levels = np.percentile(intrinsic_onlyIF, percentiles)
+# im0 = ax[0,0].imshow(intrinsic_onlyIF,origin='lower',cmap=cm.binary,
+#     vmin=np.percentile(intrinsic_onlyIF,1),vmax=np.percentile(intrinsic_onlyIF,95),extent=[0,24,0,24])
+# contours = ax[0,0].contour(intrinsic_onlyIF,levels=levels,extent=[0,24,0,24],linestyles=['--', '-'],colors='red')
+
+
 ### intrinsic maps (first row)
 for j in range(0,ncols,2):
     D_m,texp_hr = scope_list[0]
@@ -99,10 +123,18 @@ for j in range(0,ncols,2):
     intrinsic_map = gaussian_filter(signal_only, sigma=kernels[j//2],mode='wrap')
 
     ax[0,j].imshow(intrinsic_map, cmap=cm.binary,origin='lower')  #vmin and vmax don't matter. We just want a to visualize the intrinsic signal
+
+    # im = ax[0,j].imshow(intrinsic_onlyIF,origin='lower',cmap=cm.binary,
+    #     vmin=np.percentile(intrinsic_onlyIF,1),vmax=np.percentile(intrinsic_onlyIF,95))
+    contours = ax[0,j].contour(intrinsic_onlyIF,levels=levels,linestyles=['-.', '-'],colors='red',alpha=0.8,linewidths=0.5)
+
     fig.delaxes(ax[0, j+1])
 
+
+
+
 for j in range(0,ncols,2):
-    kernel_arcsec = kernels[j//2]*3.63 #pixel scale in arcsec
+    kernel_arcsec = kernels[j//2]*pix_sz_arcsec #pixel scale in arcsec
     x_start = 400  # x-coordinate for the start of the bracket
     y_start = 440    # y-coordinate for the start of the bracket
     x_end = x_start    # x-coordinate for the end of the bracket
