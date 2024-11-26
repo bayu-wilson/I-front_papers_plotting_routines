@@ -13,6 +13,7 @@ Written and documented by Bayu Wilson. Most of the corresponding figures in `fig
 | `panels_large_map.py`| The effect of a wider (by 3 times) field of view for neutral island visibility using most optimistic model|
 | `panels_large_map_other_models.py`|  Similar as previous but using the other two less optimistic models |
 | `quantify_RT_smoothing.py`| This routine was added due to the referee report regarding a requrest for a better quantification of the RT smoothing scale. Note that the corresponding figure does NOT appear in the paper as of Nov. 2024.|
+| `recomb_only.py`| Surface brightness maps with only recombinations (no I-front emission) |
 
 | **Other**    | **Description**                                                                                         |
 |------------------|---------------------------------------------------------------------------------------------------------|
